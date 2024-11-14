@@ -1,8 +1,10 @@
+import { memo } from "react";
 import { Card, Col } from "react-bootstrap";
 
-export default function Comment(props) {
+const Comment = (props) => {
 
     const { comment } = props;
+    console.log('comment render')
 
     return (
         <Col>
@@ -11,5 +13,5 @@ export default function Comment(props) {
             </Card>
         </Col>
     )
-
 }
+export default memo(Comment)

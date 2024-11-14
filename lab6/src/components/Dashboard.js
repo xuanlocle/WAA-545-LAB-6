@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import HeaderComponent from "./header";
 import Posts from "./Posts";
 import { Button, Card, Container, Form, Row } from "react-bootstrap";
 import PostDetails from "./PostDetails";
 import axios from "axios";
 import AddPost from "./AddPost";
+
+export const PostSelectContext = createContext();
 
 export default function Dashboard() {
 
@@ -92,11 +94,11 @@ export default function Dashboard() {
     }
 
     return (
-        <>
+        <PostSelectContext.Provider value={{ postSelecting, setPostSelecting }}>
             <HeaderComponent />
             <Container className="pb-5">
                 <Row className="mt-5">
-                    <Posts posts={posts} onPostSelecting={onPostSelecting} />
+                    <Posts posts={posts} /*onPostSelecting={onPostSelecting}*/ />
                 </Row>
                 <Row>
                     <Card className="p-3">
@@ -111,14 +113,14 @@ export default function Dashboard() {
                 </Row>
                 <Row className="mt-3">
                     <Card>
-                        <PostDetails post={postSelecting} onPostDelete={onPostDelete} />
+                        <PostDetails /*post={postSelecting}*/ onPostDelete={onPostDelete} />
                     </Card>
                 </Row>
                 <Row className="mt-3">
                     <AddPost onAddPost={onAddPost} />
                 </Row>
             </Container>
-        </>
+        </PostSelectContext.Provider>
     );
 
 }

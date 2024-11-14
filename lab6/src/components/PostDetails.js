@@ -1,23 +1,26 @@
 import { Button, Col, Row } from "react-bootstrap";
 import Comment from "./Comment";
+import { useContext } from "react";
+import { PostSelectContext } from './Dashboard.js'
 
 export default function PostDetails(props) {
 
-    const { post, onPostDelete } = props;
+    const { postSelecting } = useContext(PostSelectContext);
+    const { onPostDelete } = props;
 
     const handleDeletePost = (event) => {
         event.preventDefault();
-        onPostDelete(post)
+        onPostDelete(postSelecting)
     }
 
 
     return (<>
-        <h4 className="PostDetailTitle mt-3">{post?.title}</h4>
-        <h5 className="mt-3">{post?.author}</h5>
-        <p className="float-start mt-3 mb-5">{post?.content}</p>
+        <h4 className="PostDetailTitle mt-3">{postSelecting?.title}</h4>
+        <h5 className="mt-3">{postSelecting?.author}</h5>
+        <p className="float-start mt-3 mb-5">{postSelecting?.content}</p>
         <Row>
             {
-                post?.comments.map(comment => {
+                postSelecting?.comments.map(comment => {
                     return <Comment key={comment.id} comment={comment} />
                 })
             }

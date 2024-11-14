@@ -1,12 +1,17 @@
+import { useContext } from "react";
 import Post from "./Post"
 import Col from 'react-bootstrap/Col';
+import { PostSelectContext } from "./Dashboard";
 
 export default function Posts(props) {
 
-    const { posts, onPostSelecting } = props;
+    const { setPostSelecting } = useContext(PostSelectContext)
+
+    const { posts /*, onPostSelecting*/ } = props;
 
     const handleClick = (item) => (event) => {
-        onPostSelecting(item)
+        // onPostSelecting(item)
+        setPostSelecting(item);
     }
 
     return (
