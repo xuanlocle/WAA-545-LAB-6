@@ -1,17 +1,34 @@
 import { Button, Col, Row } from "react-bootstrap";
 import Comment from "./Comment";
-import { useContext } from "react";
-import { PostSelectContext } from './Dashboard.js'
+import { useContext, useEffect } from "react";
+import { DashboardContext } from '../container/Dashboard.js'
+import { useNavigate, useParams } from "react-router";
 
-export default function PostDetails(props) {
+const PostDetails = (props) => {
 
-    const { postSelecting } = useContext(PostSelectContext);
-    const { onPostDelete } = props;
+    const params = useParams();
+    const navigate = useNavigate();
+
+    const { postSelecting, onPostDelete } = useContext(DashboardContext);
 
     const handleDeletePost = (event) => {
         event.preventDefault();
         onPostDelete(postSelecting)
+        navigate('/')
     }
+
+
+    useEffect(
+        () => {
+            console.log(params.id)
+            // if (params.id) {
+            //     axios.get('http://localhost:8080/api/v1/products/' + params.id + '/reviews')
+            //         .then(response => {
+            //             setProductDetail(response.data)
+            //         })
+            //         .catch(err => console.log(err.message))
+            // }
+        }, [params.id])
 
 
     return (<>
@@ -33,3 +50,4 @@ export default function PostDetails(props) {
     )
 
 }
+export default PostDetails

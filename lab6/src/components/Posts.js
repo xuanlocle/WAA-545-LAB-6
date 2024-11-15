@@ -1,30 +1,31 @@
 import { useContext } from "react";
 import Post from "./Post"
 import Col from 'react-bootstrap/Col';
-import { PostSelectContext } from "./Dashboard";
+import { DashboardContext } from "../container/Dashboard.js";
+import { Link } from "react-router-dom";
 
 export default function Posts(props) {
 
-    const { setPostSelecting } = useContext(PostSelectContext)
+    const { posts, setPostSelecting } = useContext(DashboardContext)
 
-    const { posts /*, onPostSelecting*/ } = props;
+    // const { posts /*, onPostSelecting*/ } = props;
 
     const handleClick = (item) => (event) => {
         // onPostSelecting(item)
         setPostSelecting(item);
     }
 
-    return (
+    return (<>
+        {posts?.map(post => {
+            return <Link to={`/posts/${post.id}`} key={post.id}>
+                <Col
+                    key={post.id}
+                    className="clickable PostColumn"
+                    onClick={handleClick(post)}>
+                    <Post post={post} />
+                </Col>
+            </Link>
+        })}
+    </>)
 
-        posts.map(post => {
-            return <Col
-                key={post.id}
-                className="clickable PostColumn"
-                onClick={handleClick(post)}>
-                <Post post={post} />
-            </Col>
-        })
-
-
-    )
 }

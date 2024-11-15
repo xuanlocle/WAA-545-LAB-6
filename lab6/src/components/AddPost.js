@@ -1,9 +1,13 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
+import { DashboardContext } from "../container/Dashboard";
 
 export default function AddPost(props) {
 
-    const { onAddPost } = props;
+    const navigate = useNavigate();
+
+    const { onAddPost } = useContext(DashboardContext);
 
 
     const formRef = useRef();
@@ -36,12 +40,13 @@ export default function AddPost(props) {
             event.preventDefault();
             onAddPost(data)
             clearForm();
+            navigate('/')
         }
     }
 
 
     return (
-        <Card className="p-3">
+        <Card className="mt-3 p-3">
             <Form ref={formRef} className="float-start mt-1" onSubmit={handleAddPost}>
                 <Form.Label className="float-start">Add Post</Form.Label>
                 <Form.Control required type="text" id='title' className="mt-2" placeholder="Title" />
